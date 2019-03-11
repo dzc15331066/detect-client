@@ -2,8 +2,6 @@ description: a client for detecting number of people in or out of some places
 name: detect-client
 services:
   main:
-    command: python2 -u client/main.py
-    image: python2
     source: .
-    type: light
+    type: normal
 version: 1
