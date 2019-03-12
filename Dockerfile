@@ -1,5 +1,4 @@
-FROM debian:9.5
+FROM registry.cn-shenzhen.aliyuncs.com/paper-project/detect-client-base:latest
 WORKDIR home/detect-client
 COPY . .
-RUN apt-get update && apt-get install -y python python-pip python-qt4&& pip install thrift opencv-python numpy pillow sklearn
 CMD ["python", "client/main.py"]
