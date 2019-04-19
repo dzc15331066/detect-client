@@ -92,7 +92,7 @@ def main():
     frame_rate = video_capture.get(5)
     sample_interval = 1./ extract_rate
     print(frame_rate,extract_rate, sample_interval)
-    delay = 1000/frame_rate
+    delay = 1./frame_rate
     print(delay)
         
     fps = 0.0
@@ -115,9 +115,10 @@ def main():
         frame = cv2.resize(frame,(w, h))
         now = time.time()
         if last_sample_time + sample_interval <= now:
-            last_sample_time = now
+            print('jj')
             t1 = time.time()
             boxes, features = encode(client,frame) #image压缩为jpg格式，发送到gpu server进行yolov3检测，得到features后返回
+            last_sample_time = time.time()
             nfps = 1./(time.time()-t1)
             if fps <= 0.1:
                 fps = nfps
@@ -174,12 +175,12 @@ def main():
         cv2.putText(frame,"out number:" + str(out_count), (10,60), 0, 1e-3 * h, (255,0,0),2)
         ret, frame = cv2.imencode('.jpg', frame)
         dt["img"] = frame.tobytes()
-        wait_time = delay-(time.time()-start)*1000
+        wait_time = delay-(time.time()-start)
+        print(wait_time)
         if wait_time > 0:
             time.sleep(wait_time)
 
     video_capture.release()
-    cv2.destroyAllWindows()
 
 def get_frame():
     w = 640
