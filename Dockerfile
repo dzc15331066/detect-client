@@ -1,4 +1,4 @@
-FROM registry.cn-shenzhen.aliyuncs.com/paper-project/detect-client-base:latest
+FROM registry.cn-shenzhen.aliyuncs.com/paper-project/detect-client-base
 RUN pip install flask
 WORKDIR home/detect-client
 COPY . .
