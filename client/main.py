@@ -30,7 +30,7 @@ app = Flask(__name__)
 dt = Manager().dict()
 dt["img"] = ""
 
-__HOST = '127.0.0.1'
+__HOST = '172.18.233.70'
 __PORT = 6300
 
 last_stat_time = 0.0
@@ -115,11 +115,11 @@ def main():
         frame = cv2.resize(frame,(w, h))
         now = time.time()
         if last_sample_time + sample_interval <= now:
-            print('jj')
             t1 = time.time()
             boxes, features = encode(client,frame) #image压缩为jpg格式，发送到gpu server进行yolov3检测，得到features后返回
             last_sample_time = time.time()
             nfps = 1./(time.time()-t1)
+            print(nfps)
             if fps <= 0.1:
                 fps = nfps
             else:
@@ -176,7 +176,7 @@ def main():
         ret, frame = cv2.imencode('.jpg', frame)
         dt["img"] = frame.tobytes()
         wait_time = delay-(time.time()-start)
-        print(wait_time)
+        #print(wait_time)
         if wait_time > 0:
             time.sleep(wait_time)
 
@@ -188,7 +188,7 @@ def get_frame():
     time.sleep(0.06)
     while True:
         jpeg = dt["img"]
-        print(len(jpeg))
+        #print(len(jpeg))
         if len(jpeg) == 0:
             continue
         return jpeg
