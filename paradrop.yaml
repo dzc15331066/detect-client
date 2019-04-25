@@ -5,3 +5,6 @@ services:
     source: .
     type: normal
 version: 1
+web:
+  port: 9090
+  service: main
